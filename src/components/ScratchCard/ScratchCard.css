@@ -1,0 +1,93 @@
+
+.scratch-wrap {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 360px;
+  height: 220px;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  background: #fff8ed;
+  box-shadow: 0 8px 24px rgba(92, 25, 38, 0.12);
+}
+
+.scratch-under {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #fff8ed;
+  color: #702b35;
+  text-align: center;
+}
+
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  touch-action: none;
+  cursor: crosshair;
+  transition: opacity 0.5s ease;
+}
+
+.scratch-flower {
+  position: fixed;
+  z-index: 9999;
+  display: block;
+  pointer-events: none;
+  font-size: var(--flower-size, 22px);
+  line-height: 1;
+  opacity: 0;
+  animation: scratch-flower-fall var(--flower-duration, 3.5s)
+    var(--flower-delay, 0s) ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes scratch-flower-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.5);
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 1;
+    transform: translate3d(var(--burst-x), -35vh, 0)
+      rotate(150deg) scale(1.15);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--fall-x), 100vh, 0)
+      rotate(600deg) scale(0.8);
+  }
+}
+
+.scratch-date {
+  font-family: Georgia, serif;
+  font-size: clamp(26px, 7vw, 36px);
+  font-weight: bold;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scratch-canvas {
+    transition: none;
+  }
+
+  .scratch-flower {
+    animation-duration: 1.5s;
+  }
+}

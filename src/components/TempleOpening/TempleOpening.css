@@ -1,0 +1,258 @@
+/* ============ STAGE ============
+   The temple picture is 2:3 (portrait). It is sized by screen HEIGHT, centred,
+   and the narrow phone-shaped box crops its sides. Everything inside ".art"
+   uses percentages of the picture, so doors, frame and text always line up. */
+.temple-stage {
+  --h: 100vh;
+  --w: calc(var(--h) * 0.6667);
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  background: #12050a;
+}
+@supports (height: 100svh) {
+  .temple-stage { --h: 100svh; }
+}
+
+.stage-box {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(100vw, calc(var(--h) * 0.6));
+  height: var(--h);
+  transform: translateX(-50%);
+  overflow: hidden;
+  background: #12050a;
+}
+.st-blank .stage-box { opacity: 0; transition: opacity var(--blank-ms) ease; }
+
+.art {
+  position: absolute;
+  top: 0;
+  left: calc(50% - var(--w) / 2);
+  width: var(--w);
+  height: var(--h);
+}
+.art.no-art { background: linear-gradient(90deg, #2b070d, #5a1321 50%, #2b070d); }
+
+/* 1. Light inside the temple */
+.interior {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(ellipse 34% 40% at 50% 52%, #ffe6a8 0%, #e9a24a 32%, #7a1f26 66%, #12050a 100%);
+  filter: brightness(0.35);
+}
+.interior.go { animation: interiorGlow var(--door-ms) var(--ease) forwards; }
+.cv-rays {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 220%;
+  aspect-ratio: 1;
+  margin: -110% 0 0 -110%;
+  background: repeating-conic-gradient(rgba(255, 226, 150, 0.2) 0 5deg, transparent 5deg 15deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0, transparent 40%);
+  mask-image: radial-gradient(circle, #000 0, transparent 40%);
+  animation: spin 50s linear infinite;
+}
+
+/* 2. Doors = left half / right half of the same picture */
+.door {
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+.door-left { clip-path: inset(0 50% 0 0); }
+.door-right { clip-path: inset(0 0 0 50%); }
+.door::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5%;
+  pointer-events: none;
+}
+.door-left::after { right: 50%; background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5)); }
+.door-right::after { left: 50%; background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.5)); }
+.door-left.go { animation: doorOpenLeft var(--door-ms) var(--ease) forwards; }
+.door-right.go { animation: doorOpenRight var(--door-ms) var(--ease) forwards; }
+
+/* 3. Pillars + arch, door area transparent */
+.frame {
+  position: absolute;
+  inset: 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* 4. Text (positions are % of the picture, sizes are relative to its width) */
+.cover-text { position: absolute; inset: 0; }
+.cover-text.fade-out { animation: coverTextFade var(--fade-ms) ease forwards; }
+.ct {
+  position: absolute;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  text-align: center;
+}
+.cv-kicker {
+  top: 25.8%;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-weight: 400;
+  font-size: max(9.5px, calc(var(--w) * 0.0175));
+  letter-spacing: 0.32em;
+  color: #e6c786;
+}
+.cv-orn { display: flex; align-items: center; gap: calc(var(--w) * 0.012); color: #e6c786; }
+.cv-orn i { display: block; width: calc(var(--w) * 0.14); height: 1px; background: linear-gradient(90deg, transparent, #e6c786); }
+.cv-orn i:last-child { background: linear-gradient(270deg, transparent, #e6c786); }
+.cv-lotus { width: calc(var(--w) * 0.034); height: auto; }
+.cv-title {
+  top: 37.5%;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  font-size: max(34px, calc(var(--w) * 0.098));
+  line-height: 0.86;
+  letter-spacing: 0.005em;
+  color: #f3dcaa;
+  background: linear-gradient(180deg, #fff0c8 10%, #e8c37a 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+}
+.cv-names {
+  top: 52.1%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: max(26px, calc(var(--w) * 0.07));
+  line-height: 0.95;
+  color: #efd193;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.cv-amp { display: flex; align-items: center; gap: 0.35em; font-size: 0.78em; color: #e6c786; }
+.cv-amp i { display: block; width: calc(var(--w) * 0.08); height: 1px; background: linear-gradient(90deg, transparent, #e6c786); }
+.cv-amp i:last-child { background: linear-gradient(270deg, transparent, #e6c786); }
+.cv-tagline {
+  top: 65%;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: max(13px, calc(var(--w) * 0.025));
+  color: #e6c786;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+.open-btn {
+  top: 71.4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: calc(var(--w) * 0.34);
+  min-width: 188px;
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 1.5px solid #d4af6a;
+  border-radius: 14px;
+  color: #f5e2b3;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: max(16px, calc(var(--w) * 0.032));
+  background: linear-gradient(180deg, #6b1220, #4a0c18);
+  box-shadow: inset 0 0 0 3px #4a0c18, inset 0 0 0 4px rgba(212, 175, 106, 0.7), 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 22px rgba(212, 175, 106, 0.3);
+  cursor: pointer;
+  animation: btnGlow 2.8s ease-in-out infinite;
+}
+.open-btn:disabled { cursor: default; pointer-events: none; }
+.open-btn:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+
+/* Falling petals */
+.petals { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.petal {
+  position: absolute;
+  top: -6%;
+  opacity: 0;
+  border-radius: 70% 0 70% 0;
+  background: radial-gradient(ellipse at 30% 30%, #ffc2d1, #e0456e 70%);
+  animation: petalFall var(--d) linear var(--delay) infinite;
+}
+.st-opening .petals { opacity: 0; transition: opacity 1.2s ease; }
+
+/* ============ SITE (after the doors) ============ */
+.site-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  opacity: 1;
+  visibility: visible;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    #5a1321,
+    #12050a 75%
+  );
+}
+
+.site-wrap.is-revealing {
+  animation: siteReveal 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.site-wrap.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.replay-btn {
+  position: fixed;
+  left: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 50;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: #fff1c9;
+  background: rgba(43, 7, 13, 0.85);
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+}
+
+/* ============ KEYFRAMES ============ */
+@keyframes coverTextFade { to { opacity: 0; transform: translateY(-1.5%); } }
+@keyframes doorOpenLeft { to { transform: translateX(-30%); } }
+@keyframes doorOpenRight { to { transform: translateX(30%); } }
+@keyframes interiorGlow { to { filter: brightness(1); } }
+@keyframes siteReveal {
+  from { opacity: 0; transform: translateY(28px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes petalFall {
+  0% { opacity: 0; transform: translate(0, 0) rotate(0deg); }
+  10% { opacity: 0.9; }
+  100% { opacity: 0.75; transform: translate(var(--drift), 112vh) rotate(540deg); }
+}
+@keyframes btnGlow {
+  0%, 100% { box-shadow: inset 0 0 0 3px #4a0c18, inset 0 0 0 4px rgba(212, 175, 106, 0.7), 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 14px rgba(212, 175, 106, 0.2); }
+  50% { box-shadow: inset 0 0 0 3px #4a0c18, inset 0 0 0 4px rgba(212, 175, 106, 0.9), 0 6px 18px rgba(0, 0, 0, 0.5), 0 0 34px rgba(212, 175, 106, 0.6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open-btn, .cv-rays, .petal { animation: none; }
+  .petals { display: none; }
+  .door-left.go, .door-right.go, .interior.go, .cover-text.fade-out, .site-wrap.is-revealing {
+    animation-duration: 0.01ms !important;
+  }
+}

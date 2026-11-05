@@ -1,0 +1,111 @@
+/* Site layout + sections (the temple opening has its own CSS file) */
+.site {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 18px 90px;
+}
+
+.section {
+  position: relative;
+  margin: 30px 0;
+  padding: 44px 22px;
+  text-align: center;
+  background: var(--ivory);
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 6px var(--ivory), 0 0 0 8px var(--gold), 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease var(--reveal-delay, 120ms), transform 0.8s ease var(--reveal-delay, 120ms); }
+.reveal.in-view { opacity: 1; transform: none; }
+
+.garland {
+  position: absolute;
+  top: 12px;
+  left: 18px;
+  right: 18px;
+  height: 22px;
+  background: radial-gradient(circle at 11px 11px, #f5a623 0 6px, #e8860c 7px 9px, transparent 10px) 0 0 / 22px 22px repeat-x;
+}
+.section > .garland:first-child { position: static; margin: -18px 0 22px; }
+
+.kicker { margin: 0; font-family: var(--font-display); font-size: 12px; letter-spacing: 0.3em; color: #7a5a14; }
+.rule { width: 130px; height: 2px; margin: 20px auto; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.sub-title { margin: 0; font-family: var(--font-display); font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--maroon); }
+.big-date { margin: 8px 0 4px; font-size: 32px; font-weight: 600; color: var(--maroon); }
+.detail { margin: 4px 0; font-size: 20px; }
+.message { margin: 8px 0 0; font-size: 19px; font-style: italic; line-height: 1.55; color: #4a3a30; }
+.h2 { margin: 10px 0 18px; font-size: 32px; font-weight: 600; line-height: 1.15; color: var(--maroon); }
+.signature { margin: 0; font-size: 24px; font-style: italic; color: var(--maroon); }
+
+/* ---- Buttons ---- */
+.btn-primary, .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  margin-top: 20px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-primary { color: #fff1c9; background: var(--maroon); border: 1px solid var(--gold); }
+.btn-ghost { color: var(--maroon); background: transparent; border: 1px solid var(--maroon); }
+
+/* ---- Countdown ---- */
+.cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.cd-box { display: flex; flex-direction: column; gap: 4px; padding: 14px 2px; color: #fff1c9; background: var(--maroon); border: 1px solid var(--gold); }
+.cd-num { font-size: 30px; font-weight: 600; line-height: 1; }
+.cd-label { font-family: var(--font-display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* ---- Timeline ---- */
+.tl { list-style: none; margin: 8px 0 0; padding: 0; text-align: left; }
+.tl li { display: flex; gap: 16px; padding: 0; }
+.tl-time { width: 82px; flex: none; padding: 14px 0; text-align: right; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--maroon); }
+.tl-body { position: relative; flex: 1; padding: 14px 0 14px 20px; border-left: 2px solid var(--gold); font-size: 22px; }
+.tl-body::before { content: ''; position: absolute; left: -7px; top: 22px; width: 12px; height: 12px; background: var(--maroon); border: 2px solid var(--gold); transform: rotate(45deg); }
+
+/* ---- Carousel ---- */
+.carousel { position: relative; }
+.car-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border: 2px solid var(--gold); }
+.car-track::-webkit-scrollbar { display: none; }
+.car-slide { flex: 0 0 100%; margin: 0; scroll-snap-align: center; aspect-ratio: 4 / 5; }
+.car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.car-placeholder { width: 100%; height: 100%; display: grid; place-items: center; color: #fff1c9; font-family: var(--font-display); letter-spacing: 0.15em; background: repeating-linear-gradient(45deg, #5a1321 0 12px, #4a0e1a 12px 24px); }
+.car-btn { position: absolute; top: 50%; width: 44px; height: 44px; margin-top: -22px; border-radius: 50%; border: 1px solid var(--gold); color: #fff1c9; background: rgba(43, 7, 13, 0.8); font-size: 26px; line-height: 1; cursor: pointer; }
+.car-btn.prev { left: 8px; }
+.car-btn.next { right: 8px; }
+.dots { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+.dots span { width: 9px; height: 9px; border: 1px solid var(--maroon); transform: rotate(45deg); }
+.dots span.on { background: var(--maroon); }
+
+/* ---- Venue ---- */
+.map-frame { margin-top: 18px; aspect-ratio: 4 / 3; border: 2px solid var(--gold); }
+.map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ---- Music button ---- */
+.music-btn {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  color: #fff1c9;
+  background: rgba(43, 7, 13, 0.85);
+  cursor: pointer;
+}
+.music-btn:disabled { opacity: 0.45; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transform: none; transition: none; }
+  .scroll-hint { animation: none; }
+  html { scroll-behavior: auto; }
+}
