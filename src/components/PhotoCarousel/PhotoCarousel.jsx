@@ -25,7 +25,7 @@ export default function PhotoCarousel() {
           {photos.map((p, i) => (
             <figure className="car-slide" key={i}>
               {p.src ? (
-                <img src={p.src} alt={p.alt} loading="lazy" />
+                <img src={p.src} alt={p.alt} loading="lazy" draggable={false} />
               ) : (
                 <div className="car-placeholder" role="img" aria-label={`${p.alt} (placeholder)`}>
                   <span>Your photo {i + 1}</span>

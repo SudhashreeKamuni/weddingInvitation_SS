@@ -73,7 +73,7 @@
 .car-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border: 2px solid var(--gold); }
 .car-track::-webkit-scrollbar { display: none; }
 .car-slide { flex: 0 0 100%; margin: 0; scroll-snap-align: center; aspect-ratio: 4 / 5; }
-.car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; touch-action: pan-x pan-y; }
 .car-placeholder { width: 100%; height: 100%; display: grid; place-items: center; color: #fff1c9; font-family: var(--font-display); letter-spacing: 0.15em; background: repeating-linear-gradient(45deg, #5a1321 0 12px, #4a0e1a 12px 24px); }
 .car-btn { position: absolute; top: 50%; width: 44px; height: 44px; margin-top: -22px; border-radius: 50%; border: 1px solid var(--gold); color: #fff1c9; background: rgba(43, 7, 13, 0.8); font-size: 26px; line-height: 1; cursor: pointer; }
 .car-btn.prev { left: 8px; }

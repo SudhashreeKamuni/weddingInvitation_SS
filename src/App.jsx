@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import './App.css';
+
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 import TempleOpening from './components/TempleOpening/TempleOpening.jsx';
 import InvitationCard from './components/InvitationCard/InvitationCard.jsx';
 import ScratchCard from './components/ScratchCard/ScratchCard';
@@ -10,8 +14,7 @@ import VenueSection from './components/VenueSection/VenueSection.jsx';
 import GuestMessage from './components/GuestMessage/GuestMessage.jsx';
 import MusicToggle from './components/MusicToggle';
 
-// STEP 1: keep this false and test only the opening + invitation card.
-// STEP 2: change to true to show every other section and the music button.
+// Controls whether the remaining sections are displayed.
 const SHOW_REST_OF_SITE = true;
 
 export default function App() {
@@ -19,11 +22,6 @@ export default function App() {
   const [musicRequested, setMusicRequested] = useState(false);
 
   const siteVisible = stage === 'revealing' || stage === 'open';
-
-
-  console.log("Current stage:", stage);
-console.log("Site visible:", siteVisible);
-
 
   return (
     <>
@@ -33,6 +31,7 @@ console.log("Site visible:", siteVisible);
       >
         <main className="site">
           <InvitationCard showScrollHint={SHOW_REST_OF_SITE} />
+
           {SHOW_REST_OF_SITE && (
             <>
               <ScratchCard />
@@ -50,6 +49,10 @@ console.log("Site visible:", siteVisible);
         requestPlay={musicRequested}
         visible={SHOW_REST_OF_SITE && siteVisible}
       />
+
+      {/* Vercel monitoring */}
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }

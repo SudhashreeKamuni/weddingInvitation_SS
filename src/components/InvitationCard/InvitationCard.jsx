@@ -16,7 +16,7 @@ export default function InvitationCard() {
             </span>
             <em>&amp;</em>
             <span className="name-group">
-              <span className="family-line">Only son of Gorintla Sandhya &amp; Prabhakar</span>
+              <span className="family-line">Son of Gorintla Sandhya &amp; Prabhakar</span>
               <span>{wedding.groom}</span>
             </span>
           </h1>
